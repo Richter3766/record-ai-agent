@@ -1,39 +1,57 @@
-import React from 'react';
-import { RecorderControls } from '../features/recording/components/RecorderControls';
-import { useRecorder } from "../features/recording/hooks/userRecorder.ts";
-import {useUploadRecording} from "../features/recording/hooks/useUploadRecording.ts";
+import React from "react";
+
+import { useUploadRecording } from "../features/recording/hooks/useUploadRecording";
+import { RecorderControls } from "../features/recording/components/RecorderControls";
+import {useRecorder} from "../features/recording/hooks/userRecorder.ts";
+import {useSimpleRecordingTimer} from "../features/recording/hooks/useRecordingTimer.ts";
+import {RecordingSplitView} from "../features/transcript/widgets/RecordingSplitView.tsx";
+
 
 const RecordingPage: React.FC = () => {
-    const { status, audioUrl, start, stop, pause, resume } = useRecorder();
-    const { upload, transcript, loading } = useUploadRecording();
+    const {
+        status,
+        chunks,
+        start,
+        stop,
+        pause,
+        resume,
+    } = useRecorder(1000);
+
+    // 업로드/변환 상태 hook (chunk별로 관리)
+    const {
+        upload,
+        transcripts,
+        loadingIds: uploadingChunkIds,
+        errors,
+        // aiResponses, onAskAI 등 추가 가능
+    } = useUploadRecording();
+
+    // 경과 시간 (녹음 중일 때만)
+    const elapsedSec = useSimpleRecordingTimer(status);
 
     return (
-        <div className="p-4">
-            <h1 className="text-xl font-bold mb-4">🎙️ 녹음 테스트 페이지</h1>
+        <div className="max-w-5xl mx-auto p-4">
+            <h1 className="text-xl font-bold mb-4">🎙️ 녹음/변환 데모</h1>
 
             <RecorderControls
                 status={status}
+                elapsedSec={elapsedSec}
                 onStart={start}
                 onStop={stop}
                 onPause={pause}
                 onResume={resume}
             />
 
-            {audioUrl && (
-                <div className="mt-4 space-y-2">
-                    <audio controls src={audioUrl}/>
-                    <button onClick={() => upload(audioUrl)} disabled={loading}>
-                        {loading ? '업로드 중...' : '서버로 업로드'}
-                    </button>
-                </div>
-            )}
+            <RecordingSplitView
+                chunks={chunks}
+                uploadingChunkIds={uploadingChunkIds}
+                transcripts={transcripts}
+                errors={errors}
+                onUpload={upload}
+                // onAskAI, aiResponses, aiRespondingIds 등도 필요시 주입
+            />
 
-            {transcript && (
-                <div className="mt-6 p-4 bg-gray-100 rounded">
-                <h2 className="font-semibold mb-2">📝 변환된 스크립트</h2>
-                    <p>{transcript}</p>
-                </div>
-            )}
+            {/* (추가로 전체 초기화/다운로드 버튼, 안내 등도 필요시) */}
         </div>
     );
 };
