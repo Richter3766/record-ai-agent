@@ -21,7 +21,7 @@ export const TranscriptDetailPane: React.FC<TranscriptDetailPaneProps> = ({
                                                                           }) => {
     if (isLoading) {
         return (
-            <div className="w-full max-w-xl min-h-[140px] flex items-center justify-center bg-gray-50 border border-dashed border-gray-300 rounded-lg shadow-inner">
+            <div className="w-full max-w-xl min-h-[120px] sm:min-h-[140px] flex items-center justify-center bg-gray-50 border border-dashed border-gray-300 rounded-lg shadow-inner">
                 <span className="text-gray-400">로딩 중...</span>
             </div>
         );
@@ -29,7 +29,7 @@ export const TranscriptDetailPane: React.FC<TranscriptDetailPaneProps> = ({
 
     if (error) {
         return (
-            <div className="w-full max-w-xl min-h-[140px] flex items-center justify-center bg-red-50 border border-dashed border-red-300 rounded-lg shadow-inner">
+            <div className="w-full max-w-xl min-h-[120px] sm:min-h-[140px] flex items-center justify-center bg-red-50 border border-dashed border-red-300 rounded-lg shadow-inner">
                 <span className="text-red-500">{error}</span>
             </div>
         );
@@ -37,17 +37,17 @@ export const TranscriptDetailPane: React.FC<TranscriptDetailPaneProps> = ({
 
     if (!chunk || !transcript) {
         return (
-            <div className="w-full max-w-xl min-h-[140px] flex flex-col items-center justify-center bg-gray-50 border border-dashed border-gray-300 rounded-lg shadow-inner transition-all">
-                <span className="text-2xl text-gray-300 mb-2">📝</span>
-                <span className="text-gray-400 text-center leading-relaxed">
-          청크를 선택하면<br/>여기에 변환된 텍스트가 표시됩니다.
-        </span>
+            <div className="w-full max-w-xl min-h-[120px] sm:min-h-[140px] flex flex-col items-center justify-center bg-gray-50 border border-dashed border-gray-300 rounded-lg shadow-inner transition-all">
+                <span className="text-xl sm:text-2xl text-gray-300 mb-2">📝</span>
+                <span className="text-gray-400 text-center leading-relaxed text-sm sm:text-base">
+                    청크를 선택하면<br/>여기에 변환된 텍스트가 표시됩니다.
+                </span>
             </div>
         );
     }
 
     return (
-        <div className="w-full">
+        <div className="w-full p-4 bg-white dark:bg-gray-800 rounded-lg shadow-sm">
             <h2 className="font-bold mb-2">청크 변환 결과</h2>
             <div className="bg-gray-50 rounded p-3 shadow">
                 <div className="mb-1 text-xs text-gray-400">

@@ -26,22 +26,23 @@ export const TranscriptChunkList: React.FC<TranscriptChunkListProps& {
                                                                             aiResponses,
                                                                             aiRespondingIds,
                                                                         }) => (
-    <div className="flex flex-col gap-4 mt-4 max-h-[400px] overflow-y-auto">
+    <div className="flex flex-col gap-4 mt-4 max-h-[300px] lg:max-h-[400px] overflow-y-auto px-2"> 
         {chunks.length === 0 ? (
-            <div className="text-gray-400 text-center">녹음 청크가 없습니다.</div>
+            <div className="text-gray-400 text-center py-4">녹음 청크가 없습니다.</div>
         ) : (
             chunks.map((chunk) => (
-                <TranscriptChunkBlock
-                    key={chunk.id}
-                    chunk={chunk}
-                    isUploading={uploadingChunkIds.includes(chunk.id)}
-                    transcript={transcripts[chunk.id]}
-                    error={errors[chunk.id]}
-                    onUpload={onUpload}
-                    onAskAI={onAskAI}
-                    aiResponse={aiResponses?.[chunk.id]}
-                    isAIResponding={!!aiRespondingIds?.includes(chunk.id)}
-                />
+                <div key={chunk.id} className="transition-transform hover:scale-[1.02]">
+                    <TranscriptChunkBlock
+                        chunk={chunk}
+                        isUploading={uploadingChunkIds.includes(chunk.id)}
+                        transcript={transcripts[chunk.id]}
+                        error={errors[chunk.id]}
+                        onUpload={onUpload}
+                        onAskAI={onAskAI}
+                        aiResponse={aiResponses?.[chunk.id]}
+                        isAIResponding={!!aiRespondingIds?.includes(chunk.id)}
+                    />
+                </div>
             ))
         )}
     </div>
