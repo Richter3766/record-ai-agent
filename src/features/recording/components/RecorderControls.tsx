@@ -27,7 +27,7 @@ export const RecorderControls: React.FC<RecorderControlsProps> = ({
     return (
         <div className="flex flex-col gap-2 items-center">
             <div className="flex items-center gap-4 mb-2">
-                <span className="text-lg font-bold">
+                <span className="text-base sm:text-lg font-bold">
                     🎙️ {status === 'recording'
                     ? '녹음중'
                     : status === 'paused'
@@ -37,23 +37,48 @@ export const RecorderControls: React.FC<RecorderControlsProps> = ({
                             : '대기'}
                 </span>
                 {(status === 'recording' || status === 'paused') && (
-                    <span className="text-sm text-gray-500">{formatTime(elapsedSec)}</span>
+                    <span className="text-sm sm:text-base text-gray-500">{formatTime(elapsedSec)}</span> // responsive text size
                 )}
             </div>
-            <div className="flex gap-2">
+            <div className="flex flex-wrap justify-center gap-2">
                 {(status === 'idle' || status === 'stopped') && (
-                    <button className="btn" onClick={onStart}>시작</button>
+                    <button 
+                        className="btn w-full sm:w-auto min-w-[120px]" // vertical alignment on small screens
+                        onClick={onStart}
+                    >
+                        시작
+                    </button>
                 )}
                 {status === 'recording' && (
                     <>
-                        <button className="btn" onClick={onPause}>일시정지</button>
-                        <button className="btn" onClick={onStop}>중지</button>
+                        <button 
+                            className="btn w-full sm:w-auto min-w-[120px]" 
+                            onClick={onPause}
+                        >
+                            일시정지
+                        </button>
+                        <button 
+                            className="btn w-full sm:w-auto min-w-[120px]" 
+                            onClick={onStop}
+                        >
+                            중지
+                        </button>
                     </>
                 )}
                 {status === 'paused' && (
                     <>
-                        <button className="btn" onClick={onResume}>재개</button>
-                        <button className="btn" onClick={onStop}>중지</button>
+                        <button 
+                            className="btn w-full sm:w-auto min-w-[120px]" 
+                            onClick={onResume}
+                        >
+                            재개
+                        </button>
+                        <button 
+                            className="btn w-full sm:w-auto min-w-[120px]" 
+                            onClick={onStop}
+                        >
+                            중지
+                        </button>
                     </>
                 )}
             </div>

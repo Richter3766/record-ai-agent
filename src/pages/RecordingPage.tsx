@@ -30,26 +30,27 @@ const RecordingPage: React.FC = () => {
     const elapsedSec = useSimpleRecordingTimer(status);
 
     return (
-        <div className="max-w-5xl mx-auto p-4">
-            <h1 className="text-xl font-bold mb-4">🎙️ 녹음/변환 데모</h1>
+        <div className="max-w-5xl mx-auto p-4 min-h-screen">
+            <h1 className="text-xl sm:text-2xl font-bold mb-4">🎙️ 녹음/변환 데모</h1> 
 
-            <RecorderControls
-                status={status}
-                elapsedSec={elapsedSec}
-                onStart={start}
-                onStop={stop}
-                onPause={pause}
-                onResume={resume}
-            />
+            <div className="space-y-6">
+                <RecorderControls
+                    status={status}
+                    elapsedSec={elapsedSec}
+                    onStart={start}
+                    onStop={stop}
+                    onPause={pause}
+                    onResume={resume}
+                />
 
-            <RecordingSplitView
-                chunks={chunks}
-                uploadingChunkIds={uploadingChunkIds}
-                transcripts={transcripts}
-                errors={errors}
-                onUpload={upload}
-                // onAskAI, aiResponses, aiRespondingIds 등도 필요시 주입
-            />
+                <RecordingSplitView
+                    chunks={chunks}
+                    uploadingChunkIds={uploadingChunkIds}
+                    transcripts={transcripts}
+                    errors={errors}
+                    onUpload={upload}
+                />
+            </div>
 
             {/* (추가로 전체 초기화/다운로드 버튼, 안내 등도 필요시) */}
         </div>
